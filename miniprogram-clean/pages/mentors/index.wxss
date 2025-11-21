@@ -1,0 +1,164 @@
+/* pages/mentors/index.wxss */
+.container {
+  min-height: 100vh;
+  background: #f5f7fa;
+  padding: 30rpx;
+}
+
+.stats-card {
+  background: linear-gradient(135deg, #6366f1 0%, #764ba2 100%);
+  border-radius: 32rpx;
+  padding: 40rpx;
+  color: white;
+  margin-bottom: 40rpx;
+  box-shadow: 0 8rpx 24rpx rgba(99, 102, 241, 0.2);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40rpx;
+}
+
+.stat-title {
+  font-size: 34rpx;
+  font-weight: 600;
+}
+
+.add-btn {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 12rpx 24rpx;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+  display: flex;
+  align-items: center;
+  backdrop-filter: blur(10px);
+}
+
+.add-btn:active {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.plus-icon {
+  font-size: 32rpx;
+  margin-right: 8rpx;
+  font-weight: bold;
+  margin-top: -4rpx;
+}
+
+.stat-grid {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stat-item {
+  text-align: center;
+  flex: 1;
+}
+
+.num {
+  font-size: 56rpx;
+  font-weight: bold;
+  margin-bottom: 8rpx;
+  line-height: 1;
+}
+
+.label {
+  font-size: 24rpx;
+  opacity: 0.8;
+}
+
+.list-header {
+  margin-bottom: 24rpx;
+  padding-left: 10rpx;
+}
+
+.list-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.mentor-card {
+  background: white;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  display: flex;
+  align-items: center;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.03);
+  transition: transform 0.1s;
+}
+
+.mentor-card:active {
+  transform: scale(0.98);
+}
+
+.avatar {
+  font-size: 72rpx;
+  margin-right: 24rpx;
+  width: 100rpx;
+  height: 100rpx;
+  background: #f9fafb;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info {
+  flex: 1;
+}
+
+.name-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+.name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1f2937;
+  margin-right: 16rpx;
+}
+
+.tag {
+  font-size: 22rpx;
+  color: #6366f1;
+  background: #e0e7ff;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+}
+
+.desc {
+  font-size: 26rpx;
+  color: #9ca3af;
+}
+
+.chat-icon {
+  font-size: 40rpx;
+  color: #d1d5db;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80rpx 0;
+}
+
+.empty-text {
+  color: #9ca3af;
+  margin-bottom: 30rpx;
+  font-size: 28rpx;
+}
+
+.btn-add-big {
+  background: white;
+  color: #6366f1;
+  border: 2rpx solid #6366f1;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  padding: 16rpx 48rpx;
+  display: inline-block;
+}

@@ -1,0 +1,10 @@
+<!-- 首页 - 最小化版本 -->
+<view class="container">
+  <view class="title">智导 Smart Teacher</view>
+  <view class="subtitle">您的AI导师团队</view>
+  
+  <view class="button" bindtap="goToProfile">建立档案</view>
+  <view class="button" bindtap="goToChat">AI对话</view>
+  <view class="button" bindtap="goToMentors">导师团队</view>
+  <view class="button" bindtap="goToProjects">我的项目</view>
+</view>

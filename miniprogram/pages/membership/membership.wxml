@@ -1,0 +1,94 @@
+<!--membership.wxml-->
+<view class="membership-page">
+  <!-- 顶部会员卡 -->
+  <view class="member-card {{isPro ? 'pro' : 'free'}}">
+    <view class="card-header">
+      <text class="member-level">{{isPro ? 'Pro会员' : '免费版'}}</text>
+      <view class="member-icon">{{isPro ? '💎' : '🆓'}}</view>
+    </view>
+    
+    <view class="usage-info">
+      <view class="usage-item" wx:if="{{!isPro}}">
+        <text class="usage-label">今日已用</text>
+        <text class="usage-value">{{usageToday}}/{{quotaDaily}}</text>
+      </view>
+      <view class="usage-item" wx:else>
+        <text class="usage-label">使用权限</text>
+        <text class="usage-value">无限制</text>
+      </view>
+    </view>
+
+    <view class="expiry-info" wx:if="{{isPro && membershipInfo}}">
+      <text>有效期至：{{membershipInfo.end_date}}</text>
+    </view>
+  </view>
+
+  <!-- 会员对比 -->
+  <view class="container">
+    <view class="section-title">会员对比</view>
+    
+    <view class="comparison-table">
+      <view class="table-header">
+        <view class="col">功能</view>
+        <view class="col">免费版</view>
+        <view class="col highlight">Pro会员</view>
+      </view>
+      
+      <view class="table-row">
+        <view class="col feature">AI对话</view>
+        <view class="col">3次/天</view>
+        <view class="col highlight">无限次</view>
+      </view>
+      
+      <view class="table-row">
+        <view class="col feature">导师数量</view>
+        <view class="col">3个</view>
+        <view class="col highlight">无限制</view>
+      </view>
+      
+      <view class="table-row">
+        <view class="col feature">项目数量</view>
+        <view class="col">1个</view>
+        <view class="col highlight">无限制</view>
+      </view>
+      
+      <view class="table-row">
+        <view class="col feature">深度report</view>
+        <view class="col">❌</view>
+        <view class="col highlight">✅</view>
+      </view>
+      
+      <view class="table-row">
+        <view class="col feature">优先支持</view>
+        <view class="col">❌</view>
+        <view class="col highlight">✅</view>
+      </view>
+    </view>
+
+    <!-- 购买按钮 -->
+    <button 
+      wx:if="{{!isPro}}" 
+      class="btn btn-primary mt-lg" 
+      bindtap="buyProMembership"
+    >
+      <text>立即升级Pro会员 - ¥9.9/年</text>
+    </button>
+
+    <!-- 邀请奖励 -->
+    <view class="invite-section mt-lg">
+      <view class="section-title">邀请好友，获得奖励</view>
+      <view class="invite-card card">
+        <view class="invite-desc">
+          每成功邀请1位好友，您将获得：
+        </view>
+        <view class="reward-list">
+          <view class="reward-item">🎁 3次免费对话</view>
+          <view class="reward-item">💰 好友成为会员，您获1个月免费会员</view>
+        </view>
+        <button class="btn btn-outline mt-md" open-type="share">
+          <text>立即邀请</text>
+        </button>
+      </view>
+    </view>
+  </view>
+</view>

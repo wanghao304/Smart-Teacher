@@ -1,0 +1,44 @@
+/**app.wxss**/
+/* 全局样式 - 简洁版 */
+
+page {
+  background-color: #f5f5f5;
+  font-family: -apple-system-font, sans-serif;
+  color: #333;
+}
+
+/* 通用容器 */
+.container {
+  padding: 40rpx;
+}
+
+/* 按钮样式 */
+.btn {
+  background: linear-gradient(135deg, #6366f1 0%, #764ba2 100%);
+  color: white;
+  padding: 30rpx;
+  border-radius: 16rpx;
+  text-align: center;
+  font-size: 32rpx;
+  margin: 20rpx 0;
+}
+
+.btn:active {
+  opacity: 0.8;
+}
+
+/* 标题 */
+.title {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #6366f1;
+  text-align: center;
+  margin: 40rpx 0 20rpx;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: #666;
+  text-align: center;
+  margin-bottom: 60rpx;
+}

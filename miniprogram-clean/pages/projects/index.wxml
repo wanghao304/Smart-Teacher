@@ -1,0 +1,24 @@
+<!-- pages/projects/index.wxml -->
+<view class="container">
+  <view class="header">
+    <view class="title">我的项目</view>
+  </view>
+
+  <view class="project-list">
+    <view wx:for="{{projects}}" wx:key="id" class="project-card">
+      <view class="card-top">
+        <view class="status {{item.status}}">{{item.status === 'executing' ? '执行中' : '已完成'}}</view>
+        <view class="date">{{item.createdAt}}</view>
+      </view>
+      <view class="desc">{{item.description}}</view>
+      <view class="progress-bar">
+        <view class="fill" style="width: {{item.progress}}%"></view>
+      </view>
+    </view>
+
+    <view wx:if="{{projects.length === 0}}" class="empty-state">
+      <view class="icon">📂</view>
+      <view class="text">暂无项目</view>
+    </view>
+  </view>
+</view>

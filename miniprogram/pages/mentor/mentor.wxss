@@ -1,0 +1,70 @@
+/* mentor.wxss */
+.mentor-page {
+  min-height: 100vh;
+}
+
+.page-header {
+  padding: 60rpx var(--spacing-lg) 48rpx;
+  color: #ffffff;
+  text-align: center;
+}
+
+.page-title {
+  display: block;
+  font-size: var(--font-2xl);
+  font-weight: 700;
+  margin-bottom: 8rpx;
+}
+
+.page-subtitle {
+  display: block;
+  font-size: var(--font-sm);
+  opacity: 0.9;
+}
+
+.mentor-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16rpx;
+  margin-top: var(--spacing-lg);
+}
+
+.mentor-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24rpx;
+}
+
+.mentor-avatar {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+}
+
+.mentor-info {
+  text-align: center;
+  width: 100%;
+}
+
+.mentor-name {
+  display: block;
+  font-size: var(--font-md);
+  font-weight: 600;
+  margin-bottom: 4rpx;
+}
+
+.mentor-field {
+  display: block;
+  font-size: var(--font-xs);
+  color: var(--text-secondary);
+  margin-bottom: 8rpx;
+}

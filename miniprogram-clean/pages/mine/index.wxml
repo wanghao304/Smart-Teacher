@@ -1,0 +1,28 @@
+<!-- pages/mine/index.wxml -->
+<view class="container">
+  <view class="header">
+    <image class="avatar" src="{{userInfo.avatar || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+    <view class="info">
+      <view class="nickname">{{userInfo.nickname || '未登录'}}</view>
+      <view class="uid">ID: {{userInfo.id || '-'}}</view>
+    </view>
+  </view>
+
+  <view class="menu-list">
+    <view class="menu-item">
+      <view class="label">我的资料</view>
+      <view class="arrow">></view>
+    </view>
+    <view class="menu-item">
+      <view class="label">钱包</view>
+      <view class="arrow">></view>
+    </view>
+    <view class="menu-item">
+      <view class="label">设置</view>
+      <view class="arrow">></view>
+    </view>
+    <view class="menu-item" bindtap="logout">
+      <view class="label red">退出登录</view>
+    </view>
+  </view>
+</view>

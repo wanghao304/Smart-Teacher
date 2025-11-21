@@ -1,0 +1,109 @@
+<!-- pages/project/project.wxml -->
+<view class="container">
+
+  <!-- 项目头部 -->
+  <view class="project-header">
+    <view class="project-name">{{project.name}}</view>
+    <view class="project-meta">
+      <view class="category">{{project.category}}</view>
+      <view class="difficulty {{project.difficulty}}">
+        {{project.difficulty === 'easy' ? '简单' : project.difficulty === 'hard' ? '困难' : '中等'}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 状态切换 -->
+  <view class="status-section">
+    <view class="section-title">项目状态</view>
+    <view class="status-options">
+      <view
+        class="status-option {{project.status === item.value ? 'active' : ''}}"
+        wx:for="{{statusOptions}}" wx:key="value"
+        style="border-color: {{item.color}}; color: {{project.status === item.value ? item.color : '#94a3b8'}}"
+        bindtap="changeStatus"
+        data-status="{{item.value}}">
+        {{item.label}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 完成进度（环形进度图） -->
+  <view class="progress-section">
+    <view class="section-title">
+      <text>完成进度</text>
+      <view class="edit-progress" bindtap="startEditProgress" wx:if="{{!editingProgress}}">✏️ 编辑</view>
+    </view>
+    <view class="progress-display" wx:if="{{!editingProgress}}">
+      <canvas canvas-id="progressCanvas" style="width:120px;height:120px;" />
+    </view>
+    <view class="progress-edit" wx:else>
+      <slider class="progress-slider" value="{{tempProgress}}" min="0" max="100" step="5" show-value bindchange="onProgressChange" />
+      <view class="edit-btns">
+        <button class="btn-cancel-small" bindtap="cancelEditProgress">取消</button>
+        <button class="btn-save-small" bindtap="saveProgress">保存</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 导师关系图（Canvas） -->
+  <view class="mentors-section">
+    <view class="section-title">
+      <text>参与导师 ({{relatedMentors.length}})</text>
+      <view class="add-mentor" bindtap="showAddMentor">+ 添加</view>
+    </view>
+    <view class="mentors-graph" wx:if="{{relatedMentors.length > 0}}">
+      <canvas canvas-id="graphCanvas" style="width:300px;height:300px;" />
+    </view>
+    <view class="empty-mentors" wx:else>
+      <view class="empty-icon">👨‍🏫</view>
+      <view class="empty-text">暂无导师参与</view>
+      <button class="btn-add-first" bindtap="showAddMentor">添加第一位导师</button>
+    </view>
+  </view>
+
+  <!-- 项目描述 -->
+  <view class="desc-section">
+    <view class="section-title">项目描述</view>
+    <view class="desc-text">{{project.description || '暂无描述'}}</view>
+  </view>
+
+  <!-- 相关对话 -->
+  <view class="chats-section" wx:if="{{projectChats.length > 0}}">
+    <view class="section-title">项目相关对话</view>
+    <view class="chat-list">
+      <view class="chat-item" wx:for="{{projectChats}}" wx:key="mentorName">
+        <view class="chat-mentor">{{item.mentorName}}</view>
+        <view class="chat-message">{{item.lastMessage}}</view>
+        <view class="chat-date">{{item.date}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作区 -->
+  <view class="actions-section">
+    <button class="btn-delete-project" bindtap="deleteProject">🗑️ 删除项目</button>
+  </view>
+
+  <!-- 导师选择器（弹窗） -->
+  <view class="mentor-modal" wx:if="{{showMentorPicker}}">
+    <view class="modal-mask" bindtap="hideAddMentor"></view>
+    <view class="modal-content">
+      <view class="modal-title">选择导师</view>
+      <scroll-view class="mentor-list" scroll-y>
+        <view class="mentor-option" wx:for="{{allMentors}}" wx:key="id" bindtap="addMentor" data-id="{{item.id}}">
+          <view class="mentor-avatar-option">{{item.avatar}}</view>
+          <view class="mentor-info-option">
+            <view class="mentor-name-option">{{item.name}}</view>
+            <view class="mentor-field-option">{{item.field}}</view>
+          </view>
+        </view>
+        <view class="empty-list" wx:if="{{allMentors.length === 0}}">
+          <view class="empty-text">暂无可用导师</view>
+          <button class="btn-create-mentor" bindtap="hideAddMentor">去创建导师</button>
+        </view>
+      </scroll-view>
+      <button class="btn-close-modal" bindtap="hideAddMentor">关闭</button>
+    </view>
+  </view>
+
+</view>

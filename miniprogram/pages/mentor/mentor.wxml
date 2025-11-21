@@ -1,0 +1,30 @@
+<!--mentor.wxml-->
+<view class="mentor-page">
+  <view class="page-header gradient-bg">
+    <text class="page-title">我的导师团队</text>
+    <text class="page-subtitle">{{mentors.length}}位导师为你护航</text>
+  </view>
+
+  <view class="container">
+    <!-- 导师列表 -->
+    <view class="mentor-grid">
+      <view class="mentor-card card" wx:for="{{mentors}}" wx:key="id">
+        <view class="mentor-avatar">{{item.name.charAt(0)}}</view>
+        <view class="mentor-info">
+          <text class="mentor-name">{{item.name}}</text>
+          <text class="mentor-field">{{item.field}}</text>
+          <view class="mentor-type">
+            <view class="tag tag-{{item.type === 'macro' ? 'primary' : 'success'}}">
+              {{item.type === 'macro' ? '宏观导师' : '实战导师'}}
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 添加导师按钮 -->
+    <button class="btn btn-primary mt-lg" bindtap="addMentor">
+      <text>+ 添加导师</text>
+    </button>
+  </view>
+</view>

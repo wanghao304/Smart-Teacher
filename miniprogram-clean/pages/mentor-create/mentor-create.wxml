@@ -1,0 +1,180 @@
+<!-- pages/mentor-create/mentor-create.wxml -->
+<view class="container">
+
+  <!-- Step 0: 选择模式 -->
+  <view class="mode-step" wx:if="{{step === 0}}">
+    <view class="page-title">选择导师创建方式</view>
+    <view class="page-desc">3种方式，满足不同需求</view>
+
+    <view class="mode-cards">
+      <!-- 名人模式 -->
+      <view class="mode-card" bindtap="selectMode" data-mode="celebrity">
+        <view class="mode-icon">⭐</view>
+        <view class="mode-name">名人导师</view>
+        <view class="mode-desc">从10位商业领袖中选择</view>
+        <view class="mode-tag">推荐</view>
+      </view>
+
+      <!-- 自定义模式 -->
+      <view class="mode-card" bindtap="selectMode" data-mode="custom">
+        <view class="mode-icon">✏️</view>
+        <view class="mode-name">自定义导师</view>
+        <view class="mode-desc">输入任何人的信息</view>
+      </view>
+
+      <!-- AI推荐模式 -->
+      <view class="mode-card" bindtap="selectMode" data-mode="ai">
+        <view class="mode-icon">🤖</view>
+        <view class="mode-name">AI智能推荐</view>
+        <view class="mode-desc">根据您的档案匹配</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Step 1-名人模式：选择名人 -->
+  <view class="celebrity-step" wx:if="{{step === 1 && mode === 'celebrity'}}">
+    <view class="page-title">选择名人导师</view>
+    <view class="page-desc">AI将分析TA的成功方法论</view>
+
+    <scroll-view class="celebrity-list" scroll-y>
+      <view 
+        class="celebrity-item {{selectedCelebrity && selectedCelebrity.id === item.id ? 'selected' : ''}}"
+        wx:for="{{celebrities}}" wx:key="id"
+        bindtap="selectCelebrity"
+        data-id="{{item.id}}"
+      >
+        <view class="celeb-avatar">{{item.avatar}}</view>
+        <view class="celeb-info">
+          <view class="celeb-name">{{item.name}}</view>
+          <view class="celeb-field">{{item.field}}</view>
+          <view class="celeb-desc">{{item.desc}}</view>
+        </view>
+        <view class="celeb-check" wx:if="{{selectedCelebrity && selectedCelebrity.id === item.id}}">✓</view>
+      </view>
+    </scroll-view>
+
+    <view class="footer-btns">
+      <button class="btn-back" bindtap="goBack">返回</button>
+      <button class="btn-confirm" bindtap="confirmCelebrity">确认创建</button>
+    </view>
+  </view>
+
+  <!-- Step 1-自定义模式：填写信息 -->
+  <view class="custom-step" wx:if="{{step === 1 && mode === 'custom'}}">
+    <view class="page-title">创建自定义导师</view>
+    <view class="page-desc">AI将提炼TA的方法论</view>
+
+    <scroll-view class="form-container" scroll-y>
+      <view class="form-group">
+        <view class="label">导师姓名 *</view>
+        <input 
+          class="input" 
+          placeholder="例如：李开复、雷军、董明珠" 
+          bindinput="onCustomInput"
+          data-field="name"
+        />
+      </view>
+
+      <view class="form-group">
+        <view class="label">擅长领域 *</view>
+        <input 
+          class="input" 
+          placeholder="例如：AI创业、产品设计、供应链管理" 
+          bindinput="onCustomInput"
+          data-field="field"
+        />
+      </view>
+
+      <view class="form-group">
+        <view class="label">背景介绍 *</view>
+        <textarea 
+          class="textarea" 
+          placeholder="介绍导师的职业经历、核心成就、影响力等..." 
+          bindinput="onCustomInput"
+          data-field="background"
+          maxlength="500"
+        ></textarea>
+      </view>
+
+      <view class="form-group">
+        <view class="label">代表作品/项目（选填）</view>
+        <textarea 
+          class="textarea" 
+          placeholder="例如：创办XX公司、出版《XX》、主导XX项目..." 
+          bindinput="onCustomInput"
+          data-field="achievements"
+          maxlength="300"
+        ></textarea>
+      </view>
+
+      <view class="form-group">
+        <view class="label">核心方法论（选填）</view>
+        <textarea 
+          class="textarea" 
+          placeholder="如果您了解TA的核心理念或方法，可以填写，AI会优先参考..." 
+          bindinput="onCustomInput"
+          data-field="methodology"
+          maxlength="300"
+        ></textarea>
+      </view>
+    </scroll-view>
+
+    <view class="footer-btns">
+      <button class="btn-back" bindtap="goBack">返回</button>
+      <button class="btn-confirm" bindtap="confirmCustom">AI提炼并创建</button>
+    </view>
+  </view>
+
+  <!-- Step 2-AI推荐模式 -->
+  <view class="ai-step" wx:if="{{step === 2 && mode === 'ai'}}">
+    <view class="page-title">AI智能推荐</view>
+    <view class="page-desc">基于您的档案，为您推荐合适的导师</view>
+
+    <view class="ai-loading" wx:if="{{aiLoading}}">
+      <view class="loading-icon">🤖</view>
+      <view class="loading-text">AI分析中...</view>
+    </view>
+
+    <scroll-view class="ai-mentors" scroll-y wx:else>
+      <view 
+        class="ai-mentor-card"
+        wx:for="{{aiMentors}}" wx:key="name"
+        bindtap="selectAIMentor"
+        data-index="{{index}}"
+      >
+        <view class="mentor-header">
+          <view class="mentor-avatar">{{item.avatar}}</view>
+          <view class="mentor-basic">
+            <view class="mentor-name">{{item.name}}</view>
+            <view class="mentor-field">{{item.field}}</view>
+          </view>
+        </view>
+        
+        <view class="mentor-background">{{item.background}}</view>
+        
+        <view class="mentor-reason">
+          <view class="reason-label">推荐理由</view>
+          <view class="reason-text">{{item.reason}}</view>
+        </view>
+
+        <view class="mentor-method">
+          <view class="method-label">核心方法</view>
+          <view class="method-text">{{item.methodology}}</view>
+        </view>
+
+        <view class="select-btn">选择此导师 →</view>
+      </view>
+
+      <view class="empty-ai" wx:if="{{aiMentors.length === 0 && !aiLoading}}">
+        <view class="empty-icon">🤔</view>
+        <view class="empty-text">暂无推荐，请先完善档案</view>
+        <button class="btn-profile" bindtap="goBack">返回</button>
+      </view>
+    </scroll-view>
+
+    <view class="footer-btns" wx:if="{{!aiLoading}}">
+      <button class="btn-back" bindtap="goBack">返回重选</button>
+    </view>
+  </view>
+
+</view>

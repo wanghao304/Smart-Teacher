@@ -1,0 +1,40 @@
+/* calendar.wxss */
+.calendar-page {
+  padding-top: var(--spacing-lg);
+  min-height: 100vh;
+}
+
+.calendar-view {
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.calendar-header {
+  text-align: center;
+  font-size: var(--font-lg);
+  font-weight: 600;
+}
+
+.tasks-section {
+  margin-top: var(--spacing-md);
+}
+
+.task-list {
+  margin-top: var(--spacing-sm);
+}
+
+.task-item {
+  margin-bottom: var(--spacing-sm);
+  padding: var(--spacing-md);
+}
+
+.task-title {
+  font-size: var(--font-md);
+  font-weight: 500;
+  margin-bottom: 8rpx;
+}
+
+.task-time {
+  font-size: var(--font-xs);
+  color: var(--text-secondary);
+}

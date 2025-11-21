@@ -1,0 +1,136 @@
+<!-- pages/chat/chat.wxml -->
+<view class="container">
+  
+  <!-- 项目上下文提示 -->
+  <view class="project-banner" wx:if="{{project}}">
+    <view class="banner-icon">📋</view>
+    <view class="banner-text">当前项目：{{project.name}}</view>
+  </view>
+
+  <!-- 消息列表 -->
+  <scroll-view 
+    class="messages-container"
+    scroll-y
+    scroll-into-view="{{scrollToView}}"
+    scroll-with-animation
+  >
+    
+    <!-- 快捷问题（首次对话） -->
+    <view class="quick-questions" wx:if="{{showQuickQuestions}}">
+      <view class="quick-title">👋 你可以问我：</view>
+      <view 
+        class="quick-item"
+        wx:for="{{quickQuestions}}" wx:key="*this"
+        bindtap="selectQuickQuestion"
+        data-question="{{item}}"
+      >
+        {{item}}
+      </view>
+    </view>
+
+    <!-- 消息列表 -->
+    <view 
+      class="message-wrapper {{item.role}}"
+      wx:for="{{messages}}" wx:key="id"
+      id="msg-{{index}}"
+      bindlongpress="onLongPress"
+      data-index="{{index}}"
+    >
+      <!-- 用户消息 -->
+      <view class="message user-message" wx:if="{{item.role === 'user'}}">
+        <view class="message-content">{{item.content}}</view>
+        <view class="message-avatar">👤</view>
+      </view>
+
+      <!-- AI消息 -->
+      <view class="message ai-message" wx:else>
+        <view class="message-avatar">{{mentor.avatar}}</view>
+        <view class="message-content">{{item.content}}</view>
+      </view>
+
+      <view class="message-time">{{item.timestamp}}</view>
+    </view>
+
+    <!-- AI输入中... -->
+    <view class="message-wrapper assistant" wx:if="{{aiTyping}}">
+      <view class="message ai-message">
+        <view class="message-avatar">{{mentor.avatar}}</view>
+        <view class="message-content typing">
+          <view class="typing-dot"></view>
+          <view class="typing-dot"></view>
+          <view class="typing-dot"></view>
+        </view>
+      </view>
+    </view>
+
+    <view class="bottom-spacer"></view>
+  </scroll-view>
+
+  <!-- 输入区域 -->
+  <view class="input-area">
+    <view class="input-wrapper">
+      
+      <!-- 功能菜单按钮 -->
+      <view class="tool-btn" bindtap="showActionMenu">
+        <text>➕</text>
+      </view>
+
+      <!-- 文字输入 -->
+      <view class="input-container" wx:if="{{inputMode === 'text'}}">
+        <input 
+          class="message-input"
+          placeholder="输入消息..."
+          value="{{inputText}}"
+          bindinput="onInputChange"
+          confirm-type="send"
+          bindconfirm="sendMessage"
+        />
+      </view>
+
+      <!-- 语音输入 -->
+      <view class="voice-container" wx:else>
+        <view 
+          class="voice-btn"
+          bindtouchstart="startVoiceRecord"
+          bindtouchend="endVoiceRecord"
+        >
+          按住说话
+        </view>
+      </view>
+
+      <!-- 切换输入模式 -->
+      <view class="tool-btn" bindtap="toggleInputMode">
+        <text wx:if="{{inputMode === 'text'}}">🎤</text>
+        <text wx:else>⌨️</text>
+      </view>
+
+      <!-- 发送按钮 -->
+      <view 
+        class="send-btn {{inputText ? 'active' : ''}}"
+        bindtap="sendMessage"
+        wx:if="{{inputMode === 'text' && inputText}}"
+      >
+        发送
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="action-menu" wx:if="{{showMenu}}">
+    <view class="menu-mask" bindtap="hideActionMenu"></view>
+    <view class="menu-content">
+      <view class="menu-title">选择操作</view>
+      <view 
+        class="menu-item"
+        wx:for="{{menuOptions}}" wx:key="action"
+        bindtap="handleMenuAction"
+        data-action="{{item.action}}"
+      >
+        <view class="menu-icon">{{item.icon}}</view>
+        <view class="menu-label">{{item.label}}</view>
+      </view>
+      <button class="menu-close" bindtap="hideActionMenu">取消</button>
+    </view>
+  </view>
+
+</view>

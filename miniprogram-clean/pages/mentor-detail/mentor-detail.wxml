@@ -1,0 +1,154 @@
+<!-- pages/mentor-detail/mentor-detail.wxml -->
+<view class="container">
+  
+  <!-- 导师头部卡片 -->
+  <view class="mentor-header">
+    <view class="avatar-section">
+      <view class="avatar-circle" bindtap="{{editing ? 'showAvatarSelector' : ''}}">
+        {{mentor.avatar}}
+        <view class="edit-icon" wx:if="{{editing}}">✏️</view>
+      </view>
+      
+      <view class="mentor-basic">
+        <input 
+          wx:if="{{editing}}"
+          class="name-input"
+          value="{{editData.name}}"
+          bindinput="onInputChange"
+          data-field="name"
+          placeholder="导师姓名"
+        />
+        <view wx:else class="mentor-name">{{mentor.name}}</view>
+        
+        <input 
+          wx:if="{{editing}}"
+          class="field-input"
+          value="{{editData.field}}"
+          bindinput="onInputChange"
+          data-field="field"
+          placeholder="擅长领域"
+        />
+        <view wx:else class="mentor-field">{{mentor.field}}</view>
+      </view>
+    </view>
+
+    <view class="type-tag">{{mentor.type === 'celebrity' ? '名人导师' : mentor.type === 'custom' ? '自定义' : 'AI推荐'}}</view>
+  </view>
+
+  <!-- 数据统计 -->
+  <view class="stats-section">
+    <view class="section-title">📊 互动数据</view>
+    <view class="stats-grid">
+      <view class="stat-item">
+        <view class="stat-value">{{stats.chatCount}}</view>
+        <view class="stat-label">对话次数</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value">{{stats.totalMessages}}</view>
+        <view class="stat-label">消息总数</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value">{{stats.avgResponseTime}}s</view>
+        <view class="stat-label">平均响应</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value">{{stats.lastChatDate}}</view>
+        <view class="stat-label">最近对话</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 关键话题 -->
+  <view class="topics-section" wx:if="{{keyTopics.length > 0}}">
+    <view class="section-title">💬 关键话题</view>
+    <view class="topics-list">
+      <view class="topic-item" wx:for="{{keyTopics}}" wx:key="name">
+        <view class="topic-name">{{item.name}}</view>
+        <view class="topic-count">{{item.count}}次</view>
+        <view class="topic-trend {{item.trend}}">
+          {{item.trend === 'up' ? '↑' : item.trend === 'down' ? '↓' : '→'}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 背景介绍 -->
+  <view class="info-section">
+    <view class="section-title">📝 背景介绍</view>
+    <textarea 
+      wx:if="{{editing}}"
+      class="background-input"
+      value="{{editData.background}}"
+      bindinput="onInputChange"
+      data-field="background"
+      placeholder="导师的背景介绍..."
+      maxlength="500"
+    ></textarea>
+    <view wx:else class="background-text">{{mentor.background || '暂无介绍'}}</view>
+  </view>
+
+  <!-- 核心方法论 -->
+  <view class="methodology-section">
+    <view class="section-title">🎯 核心方法论</view>
+    <textarea 
+      wx:if="{{editing}}"
+      class="methodology-input"
+      value="{{editData.methodology}}"
+      bindinput="onInputChange"
+      data-field="methodology"
+      placeholder="导师的核心方法论..."
+      maxlength="500"
+    ></textarea>
+    <view wx:else class="methodology-text" bindtap="viewMethodology">
+      {{mentor.methodology || '暂无方法论'}}
+    </view>
+  </view>
+
+  <!-- 操作按钮区 -->
+  <view class="actions-section">
+    <view class="section-title">⚙️ 操作</view>
+    
+    <!-- 编辑模式按钮 -->
+    <view class="action-btns" wx:if="{{editing}}">
+      <button class="btn-cancel" bindtap="cancelEdit">取消</button>
+      <button class="btn-save" bindtap="saveEdit">保存修改</button>
+    </view>
+    
+    <!-- 正常模式按钮 -->
+    <view class="action-btns" wx:else>
+      <button class="btn-edit" bindtap="startEdit">📝 编辑资料</button>
+      <button class="btn-export" bindtap="exportChat">💾 导出聊天</button>
+      <button class="btn-delete" bindtap="deleteMentor">🗑️ 删除导师</button>
+    </view>
+  </view>
+
+  <!-- 底部对话按钮 -->
+  <view class="footer-chat" wx:if="{{!editing}}">
+    <button class="btn-chat" bindtap="startChat">
+      💬 开始对话
+    </button>
+  </view>
+
+  <!-- 头像选择器 -->
+  <view class="avatar-modal" wx:if="{{showAvatarPicker}}">
+    <view class="modal-mask" bindtap="hideAvatarSelector"></view>
+    <view class="modal-content">
+      <view class="modal-title">选择头像</view>
+      
+      <view class="avatar-grid">
+        <view 
+          class="avatar-option"
+          wx:for="{{avatarEmojis}}" wx:key="*this"
+          bindtap="selectAvatar"
+          data-avatar="{{item}}"
+        >
+          {{item}}
+        </view>
+      </view>
+
+      <button class="btn-upload" bindtap="uploadAvatar">📷 上传自定义图片</button>
+      <button class="btn-close" bindtap="hideAvatarSelector">关闭</button>
+    </view>
+  </view>
+
+</view>

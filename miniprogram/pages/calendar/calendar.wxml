@@ -1,0 +1,24 @@
+<!-- calendar.wxml -->
+<view class="calendar-page">
+  <view class="container">
+    <view class="page-title">日历与任务</view>
+    
+    <!-- 日历视图（简化版） -->
+    <view class="calendar-view card">
+      <view class="calendar-header">
+        <text>{{currentDate}}</text>
+      </view>
+    </view>
+
+    <!-- 任务列表 -->
+    <view class="tasks-section">
+      <view class="section-title">今日任务</view>
+      <view class="task-list">
+        <view class="task-item card" wx:for="{{tasks}}" wx:key="id">
+          <view class="task-title">{{item.title}}</view>
+          <view class="task-time">{{item.deadline}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

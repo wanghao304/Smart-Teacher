@@ -1,0 +1,159 @@
+<!-- pages/index/index.wxml -->
+<view class="container">
+
+  <!-- B区：数据统计区 -->
+  <view class="stats-section">
+    <view class="stat-card" bindtap="navToProjects" data-type="all">
+      <view class="stat-value">{{stats.totalProjects}}</view>
+      <view class="stat-label">项目总数</view>
+    </view>
+
+    <view class="stat-card" bindtap="navToMentors">
+      <view class="stat-value">{{stats.totalMentors}}</view>
+      <view class="stat-label">导师总数</view>
+    </view>
+
+    <view class="stat-card" bindtap="navToProjects" data-type="success">
+      <view class="stat-value success">{{stats.successProjects}}</view>
+      <view class="stat-label">成功项目</view>
+    </view>
+
+    <view class="stat-card" bindtap="navToProjects" data-type="failed">
+      <view class="stat-value failed">{{stats.failedProjects}}</view>
+      <view class="stat-label">失败项目</view>
+    </view>
+
+    <view class="stat-card" bindtap="navToProjects" data-type="abandoned">
+      <view class="stat-value abandoned">{{stats.abandonedProjects}}</view>
+      <view class="stat-label">放弃项目</view>
+    </view>
+
+    <view class="stat-card">
+      <view class="stat-value">{{stats.studyDays}}</view>
+      <view class="stat-label">学习天数</view>
+    </view>
+  </view>
+
+  <!-- A区：当前项目展示 -->
+  <view class="project-section">
+    <view class="section-title">当前执行项目</view>
+    
+    <view class="project-card" wx:if="{{currentProject}}" bindtap="viewProjectDetail">
+      <view class="project-header">
+        <view class="project-name">{{currentProject.name}}</view>
+        <view class="project-status active">进行中</view>
+      </view>
+      
+      <view class="project-progress">
+        <view class="progress-label">
+          <text>项目进度</text>
+          <text class="progress-percent">{{currentProject.progress || 0}}%</text>
+        </view>
+        <view class="progress-bar">
+          <view class="progress-fill" style="width: {{currentProject.progress || 0}}%"></view>
+        </view>
+      </view>
+
+      <view class="project-mentors" wx:if="{{currentProject.mentors}}">
+        <view class="mentor-label">参与导师</view>
+        <view class="mentor-avatars">
+          <view class="mentor-avatar" wx:for="{{currentProject.mentors}}" wx:key="id">
+            {{item.name.substring(0,1)}}
+          </view>
+        </view>
+      </view>
+
+      <view class="project-footer">
+        <text class="project-time">创建于 {{currentProject.createdAt}}</text>
+        <text class="project-arrow">查看详情 ›</text>
+      </view>
+    </view>
+
+    <view class="empty-project" wx:else>
+      <view class="empty-icon">📋</view>
+      <view class="empty-text">暂无进行中的项目</view>
+      <button class="btn-create-project" bindtap="createProject">新建项目</button>
+    </view>
+  </view>
+
+  <!-- C区：快捷操作区 -->
+  <view class="quick-actions">
+    <view class="action-btn" bindtap="createMentor">
+      <view class="action-icon">👨‍🏫</view>
+      <view class="action-text">新建导师</view>
+    </view>
+
+    <view class="action-btn" bindtap="updateProfile">
+      <view class="action-icon">📝</view>
+      <view class="action-text">更新资料</view>
+    </view>
+
+    <view class="action-btn" bindtap="createProject">
+      <view class="action-icon">➕</view>
+      <view class="action-text">新建项目</view>
+    </view>
+
+    <view class="action-btn" bindtap="navToProjects" data-type="all">
+      <view class="action-icon">📊</view>
+      <view class="action-text">所有项目</view>
+    </view>
+
+    <view class="action-btn" bindtap="navToMentors">
+      <view class="action-icon">👥</view>
+      <view class="action-text">导师团队</view>
+    </view>
+  </view>
+
+  <!-- D区：对话框区 -->
+  <view class="chat-section">
+    <view class="chat-header">
+      <picker class="mentor-picker" range="{{mentors}}" range-key="name" bindchange="selectMentor" wx:if="{{mentors.length > 0}}">
+        <view class="picker-content">
+          <view class="selected-mentor">
+            <view class="mentor-icon">💬</view>
+            <text>{{selectedMentor ? selectedMentor.name : '选择导师'}}</text>
+          </view>
+          <view class="picker-arrow">▼</view>
+        </view>
+      </picker>
+
+      <view class="mentor-empty" wx:else>
+        <text class="empty-hint">暂无导师，</text>
+        <text class="link" bindtap="createMentor">去添加 ›</text>
+      </view>
+    </view>
+
+    <view class="chat-input-wrapper">
+      <view class="input-container">
+        <input 
+          class="chat-input" 
+          wx:if="{{inputMode === 'text'}}"
+          placeholder="与导师对话..."
+          value="{{messageContent}}"
+          bindinput="onMessageInput"
+          confirm-type="send"
+          bindconfirm="sendMessage"
+        />
+        <view class="voice-btn" wx:else>
+          <text>按住说话</text>
+        </view>
+      </view>
+
+      <view class="input-tools">
+        <view class="tool-btn" bindtap="toggleInputMode">
+          <text wx:if="{{inputMode === 'text'}}">🎤</text>
+          <text wx:else>⌨️</text>
+        </view>
+
+        <view class="tool-btn" bindtap="uploadAttachment">
+          <text>➕</text>
+        </view>
+
+        <view class="send-btn" bindtap="sendMessage" wx:if="{{messageContent}}">
+          发送
+        </view>
+      </view>
+    </view>
+  </view>
+
+</view>

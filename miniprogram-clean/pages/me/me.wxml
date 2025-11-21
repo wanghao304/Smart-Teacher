@@ -1,0 +1,149 @@
+<!-- pages/me/me.wxml -->
+<view class="container">
+  <!-- 用户信息卡片 -->
+  <view class="user-card">
+    <view class="user-header">
+      <view class="avatar-section">
+        <image class="avatar" src="/images/tabbar/mentor-active.svg" mode="aspectFill"></image>
+        <view class="member-badge" wx:if="{{userInfo.memberLevel > 0}}">VIP</view>
+      </view>
+      <view class="user-info">
+        <view class="nickname">{{userInfo.nickname}}</view>
+        <view class="identity">{{userInfo.identity}}</view>
+      </view>
+      <view class="member-btn" bindtap="goToMember">
+        <text wx:if="{{userInfo.memberLevel === 0}}">开通会员</text>
+        <text wx:else>会员中心</text>
+      </view>
+    </view>
+
+    <!-- 数据统计 -->
+    <view class="user-stats">
+      <view class="stat-item" bindtap="goToMyProjects">
+        <view class="stat-value">{{stats.projects}}</view>
+        <view class="stat-label">我的项目</view>
+      </view>
+      <view class="stat-item" bindtap="goToMyMentors">
+        <view class="stat-value">{{stats.mentors}}</view>
+        <view class="stat-label">我的导师</view>
+      </view>
+      <view class="stat-item" bindtap="goToLearningPath">
+        <view class="stat-value">{{stats.studyDays}}</view>
+        <view class="stat-label">学习天数</view>
+      </view>
+      <view class="stat-item" bindtap="goToLearningPath">
+        <view class="stat-value">{{stats.achievements}}</view>
+        <view class="stat-label">成就徽章</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 核心功能区 -->
+  <view class="section">
+    <view class="section-title">核心功能</view>
+    <view class="menu-list">
+      <view class="menu-item" bindtap="goToMyProjects">
+        <view class="menu-icon">📊</view>
+        <view class="menu-text">我的项目</view>
+        <view class="menu-arrow">›</view>
+      </view>
+      <view class="menu-item" bindtap="goToMyMentors">
+        <view class="menu-icon">👨‍🏫</view>
+        <view class="menu-text">我的导师团</view>
+        <view class="menu-arrow">›</view>
+      </view>
+      <view class="menu-item" bindtap="goToLearningPath">
+        <view class="menu-icon">📈</view>
+        <view class="menu-text">学习历程</view>
+        <view class="menu-badge">NEW</view>
+        <view class="menu-arrow">›</view>
+      </view>
+      <view class="menu-item" bindtap="goToCollection">
+        <view class="menu-icon">⭐</view>
+        <view class="menu-text">我的收藏</view>
+        <view class="menu-arrow">›</view>
+      </view>
+      <view class="menu-item" bindtap="goToMessages">
+        <view class="menu-icon">💬</view>
+        <view class="menu-text">消息通知</view>
+        <view class="menu-badge red">3</view>
+        <view class="menu-arrow">›</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 社交功能 -->
+  <view class="section">
+    <view class="section-title">社交互动</view>
+    <view class="menu-list">
+      <view class="menu-item" bindtap="goToFriends">
+        <view class="menu-icon">👥</view>
+        <view class="menu-text">我的好友</view>
+        <view class="menu-arrow">›</view>
+      </view>
+      <view class="menu-item" bindtap="goToInvite">
+        <view class="menu-icon">🎁</view>
+        <view class="menu-text">邀请有礼</view>
+        <view class="menu-desc">邀1人得7天VIP</view>
+        <view class="menu-arrow">›</view>
+      </view>
+      <view class="menu-item" bindtap="goToShare">
+        <view class="menu-icon">📤</view>
+        <view class="menu-text">分享海报</view>
+        <view class="menu-arrow">›</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 会员与服务 -->
+  <view class="section">
+    <view class="section-title">会员与服务</view>
+    <view class="menu-list">
+      <view class="menu-item" bindtap="goToMember">
+        <view class="menu-icon">💎</view>
+        <view class="menu-text">会员中心</view>
+        <view class="menu-desc">专属特权查看</view>
+        <view class="menu-arrow">›</view>
+      </view>
+      <view class="menu-item" bindtap="goToWallet">
+        <view class="menu-icon">💰</view>
+        <view class="menu-text">我的钱包</view>
+        <view class="menu-arrow">›</view>
+      </view>
+      <view class="menu-item" bindtap="goToOrders">
+        <view class="menu-icon">📋</view>
+        <view class="menu-text">订单记录</view>
+        <view class="menu-arrow">›</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 设置与帮助 -->
+  <view class="section">
+    <view class="section-title">设置与帮助</view>
+    <view class="menu-list">
+      <view class="menu-item" bindtap="goToSettings">
+        <view class="menu-icon">⚙️</view>
+        <view class="menu-text">账号设置</view>
+        <view class="menu-arrow">›</view>
+      </view>
+      <view class="menu-item" bindtap="goToHelp">
+        <view class="menu-icon">❓</view>
+        <view class="menu-text">帮助中心</view>
+        <view class="menu-arrow">›</view>
+      </view>
+      <view class="menu-item" bindtap="goToFeedback">
+        <view class="menu-icon">📝</view>
+        <view class="menu-text">意见反馈</view>
+        <view class="menu-arrow">›</view>
+      </view>
+      <view class="menu-item" bindtap="goToAbout">
+        <view class="menu-icon">ℹ️</view>
+        <view class="menu-text">关于我们</view>
+        <view class="menu-arrow">›</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="bottom-spacer"></view>
+</view>

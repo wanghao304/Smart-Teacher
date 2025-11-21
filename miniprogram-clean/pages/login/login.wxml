@@ -1,0 +1,70 @@
+<!-- pages/login/login.wxml -->
+<view class="container">
+  <!-- Logo区域 -->
+  <view class="header">
+    <view class="logo-box">
+      <!-- 使用 SVG 替代图片 -->
+      <image class="logo-icon" src="/images/tabbar/mentor-active.svg" mode="aspectFit"></image>
+    </view>
+    <view class="app-name">智导 Smart Teacher</view>
+    <view class="slogan">您的专属AI导师团队</view>
+  </view>
+
+  <!-- 模式1: 微信登录 (默认) -->
+  <view class="login-form" wx:if="{{loginMode === 'wechat'}}">
+    <button class="btn-wechat" bindtap="wechatLogin" loading="{{loading}}">
+      微信一键登录
+    </button>
+    <view class="other-login" bindtap="switchMode" data-mode="phone">
+      手机号登录/注册
+    </view>
+  </view>
+
+  <!-- 模式2: 手机号登录 -->
+  <view class="login-form" wx:if="{{loginMode === 'phone'}}">
+    <view class="input-group">
+      <input class="input" type="number" placeholder="请输入手机号" model:value="{{phone}}" maxlength="11" />
+    </view>
+    <view class="input-group code-group">
+      <input class="input" type="number" placeholder="验证码" model:value="{{code}}" maxlength="6" />
+      <view class="btn-code {{countdown > 0 ? 'disabled' : ''}}" bindtap="sendCode">
+        {{countdown > 0 ? countdown + 's' : '获取验证码'}}
+      </view>
+    </view>
+    
+    <button class="btn-primary" bindtap="phoneLogin" loading="{{loading}}">
+      登录 / 注册
+    </button>
+    <view class="other-login" bindtap="switchMode" data-mode="wechat">
+      返回微信登录
+    </view>
+  </view>
+
+  <!-- 模式3: 管理员登录 -->
+  <view class="login-form" wx:if="{{loginMode === 'admin'}}">
+    <view class="form-title">管理员登录</view>
+    <view class="input-group">
+      <input class="input" placeholder="管理员账号" model:value="{{adminAccount}}" />
+    </view>
+    <view class="input-group">
+      <input class="input" password placeholder="密码" model:value="{{adminPassword}}" />
+    </view>
+    
+    <button class="btn-primary admin-btn" bindtap="adminLogin">
+      进入管理后台
+    </button>
+    <view class="other-login" bindtap="switchMode" data-mode="wechat">
+      返回用户登录
+    </view>
+  </view>
+
+  <!-- 底部协议与管理员入口 -->
+  <view class="footer">
+    <view class="agreement">
+      登录即代表同意 <text class="link">用户协议</text> 和 <text class="link">隐私政策</text>
+    </view>
+    <view class="admin-link" wx:if="{{loginMode !== 'admin'}}" bindtap="switchMode" data-mode="admin">
+      管理员登录
+    </view>
+  </view>
+</view>

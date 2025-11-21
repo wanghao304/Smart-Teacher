@@ -1,0 +1,32 @@
+<!-- project.wxml -->
+<view class="project-page">
+  <view class="container">
+    <view class="page-title">我的项目</view>
+    
+    <!-- 项目列表 -->
+    <view class="project-list">
+      <view class="project-card card" wx:for="{{projects}}" wx:key="id">
+        <view class="project-header">
+          <text class="project-name">{{item.name}}</text>
+          <view class="tag tag-{{item.status}}">{{item.statusText}}</view>
+        </view>
+        <view class="project-progress">
+          <view class="progress-label">完成度</view>
+          <view class="progress-bar">
+            <view class="progress-fill" style="width: {{item.completion}}%"></view>
+          </view>
+          <view class="progress-value">{{item.completion}}%</view>
+        </view>
+        <view class="project-score">
+          <text>导师评分：</text>
+          <text class="score-value">{{item.score}}/10</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 创建项目按钮 -->
+    <button class="btn btn-primary mt-lg" bindtap="createProject">
+      <text>+ 创建新项目</text>
+    </button>
+  </view>
+</view>

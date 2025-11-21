@@ -1,0 +1,284 @@
+<!-- pages/profile/profile.wxml -->
+<view class="container">
+  <!-- 顶部进度 -->
+  <view class="progress-header">
+    <view class="step-indicator">
+      <text class="current-step">{{step}}</text>
+      <text class="total-step">/ {{totalSteps}}</text>
+    </view>
+    <view class="progress-bar">
+      <view class="progress-fill" style="width: {{step / totalSteps * 100}}%"></view>
+    </view>
+  </view>
+
+  <!-- Step 1: 身份锚点 (3题) -->
+  <view class="step-content" wx:if="{{step === 1}}">
+    <view class="question-title">身份锚点</view>
+    <view class="question-desc">先了解您的起点</view>
+
+    <view class="form-group">
+      <view class="label">当前所在行业</view>
+      <input class="input" placeholder="例如：互联网、医疗、教育" model:value="{{currentIndustry}}" />
+    </view>
+
+    <view class="form-group">
+      <view class="label">当前职位/角色</view>
+      <input class="input" placeholder="例如：产品经理、外科医生" model:value="{{currentRole}}" />
+    </view>
+
+    <view class="form-group">
+      <view class="label">从业年资 ({{yearsExp}}年)</view>
+      <slider min="0" max="30" value="{{yearsExp}}" activeColor="#6366f1" bindchange="bindExpChange" show-value/>
+    </view>
+  </view>
+
+  <!-- Step 2: 🔥 学习目标 (4题) - 核心！ -->
+  <view class="step-content" wx:if="{{step === 2}}">
+    <view class="question-title">🎯 您的学习目标</view>
+    <view class="question-desc">先告诉我们您的需求类型</view>
+
+    <view class="form-group">
+      <view class="label">我想...</view>
+      <view class="dual-cards">
+        <view 
+          class="card {{learningType === 'cross_field' ? 'active' : ''}}"
+          bindtap="selectLearningType"
+          data-type="cross_field"
+        >
+          <view class="card-icon">🚀</view>
+          <view class="card-label">跨界学习</view>
+          <view class="card-desc">学习新领域</view>
+        </view>
+        <view 
+          class="card {{learningType === 'core_improve' ? 'active' : ''}}"
+          bindtap="selectLearningType"
+          data-type="core_improve"
+        >
+          <view class="card-icon">📈</view>
+          <view class="card-label">本职突破</view>
+          <view class="card-desc">解决工作难题</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 跨界学习分支 -->
+    <block wx:if="{{learningType === 'cross_field'}}">
+      <view class="form-group">
+        <view class="label">想学习的领域</view>
+        <input class="input" placeholder="例如：AI编程、餐饮管理、短视频运营" model:value="{{targetField}}" />
+        <view class="tip">💡 不必与当前职业相关</view>
+      </view>
+
+      <view class="form-group">
+        <view class="label">想做的项目类型</view>
+        <input class="input" placeholder="例如：开发一个AI工具、开一家羊肉粉馆" model:value="{{targetProject}}" />
+      </view>
+    </block>
+
+    <!-- 本职突破分支 -->
+    <block wx:if="{{learningType === 'core_improve'}}">
+      <view class="form-group">
+        <view class="label">当前遇到的困扰或瓶颈</view>
+        <textarea 
+          class="textarea" 
+          placeholder="描述您在工作中遇到的具体问题，如技术选型困难、团队管理瓶颈、业务增长停滞等..." 
+          model:value="{{currentChallenge}}"
+          maxlength="200"
+          show-confirm-bar="{{false}}"
+        ></textarea>
+        <view class="char-count">{{currentChallenge.length}}/200</view>
+      </view>
+    </block>
+
+    <view class="form-group" wx:if="{{learningType}}">
+      <view class="label">期望多久达成目标 ({{targetTimeline}}个月)</view>
+      <slider min="1" max="24" value="{{targetTimeline}}" activeColor="#6366f1" bindchange="bindTimelineChange" show-value/>
+    </view>
+  </view>
+
+  <!-- Step 3: 能力盘点 (4题) -->
+  <view class="step-content" wx:if="{{step === 3}}">
+    <view class="question-title">能力盘点</view>
+    <view class="question-desc">客观评估您的当前技能</view>
+
+    <view class="form-group">
+      <view class="label">技术能力（最多选5个）</view>
+      <view class="skill-tags">
+        <view 
+          wx:for="{{techOptions}}" wx:key="*this"
+          class="skill-tag {{techSkills.indexOf(item) > -1 ? 'active' : ''}}"
+          bindtap="toggleTechSkill"
+          data-skill="{{item}}"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <view class="form-group">
+      <view class="label">软技能（最多选5个）</view>
+      <view class="skill-tags">
+        <view 
+          wx:for="{{softOptions}}" wx:key="*this"
+          class="skill-tag {{softSkills.indexOf(item) > -1 ? 'active' : ''}}"
+          bindtap="toggleSoftSkill"
+          data-skill="{{item}}"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <view class="form-group">
+      <view class="label">您最擅长的领域</view>
+      <input class="input" placeholder="例如：数据分析、用户洞察" model:value="{{strengthArea}}" />
+    </view>
+
+    <view class="form-group">
+      <view class="label">您最薄弱的环节</view>
+      <input class="input" placeholder="例如：时间管理、公开演讲" model:value="{{weakArea}}" />
+    </view>
+  </view>
+
+  <!-- Step 4: 学习特质 (3题) -->
+  <view class="step-content" wx:if="{{step === 4}}">
+    <view class="question-title">学习特质</view>
+    <view class="question-desc">帮助导师找到教您的最佳方式</view>
+
+    <view class="form-group">
+      <view class="label">学习速度（自评）</view>
+      <slider min="1" max="10" value="{{learningSpeed}}" activeColor="#6366f1" bindchange="bindSpeedChange" show-value/>
+      <view class="slider-labels">
+        <text>较慢</text>
+        <text>快速学习</text>
+      </view>
+    </view>
+
+    <view class="form-group">
+      <view class="label">您的理解方式</view>
+      <view class="dual-cards">
+        <view 
+          wx:for="{{comprehensionOptions}}" wx:key="id"
+          class="card {{comprehensionStyle === item.id ? 'active' : ''}}"
+          bindtap="selectComprehension"
+          data-id="{{item.id}}"
+        >
+          <view class="card-label">{{item.label}}</view>
+          <view class="card-desc">{{item.desc}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-group">
+      <view class="label">偏好的学习方式</view>
+      <view class="option-grid">
+        <view 
+          wx:for="{{methodOptions}}" wx:key="id"
+          class="option-card {{preferredMethod === item.id ? 'active' : ''}}"
+          bindtap="selectMethod"
+          data-id="{{item.id}}"
+        >
+          {{item.label}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Step 5: 性格底色 (3题) -->
+  <view class="step-content" wx:if="{{step === 5}}">
+    <view class="question-title">性格底色</view>
+    <view class="question-desc">让导师了解如何与您相处</view>
+
+    <view class="form-group">
+      <view class="label">沟通风格</view>
+      <view class="dual-cards">
+        <view 
+          wx:for="{{commOptions}}" wx:key="id"
+          class="card {{communicationStyle === item.id ? 'active' : ''}}"
+          bindtap="selectComm"
+          data-id="{{item.id}}"
+        >
+          <view class="card-label">{{item.label}}</view>
+          <view class="card-desc">{{item.desc}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-group">
+      <view class="label">抗压能力（自评）</view>
+      <slider min="1" max="10" value="{{stressResistance}}" activeColor="#6366f1" bindchange="bindStressChange" show-value/>
+      <view class="slider-labels">
+        <text>易焦虑</text>
+        <text>压力山大也不怕</text>
+      </view>
+    </view>
+
+    <view class="form-group">
+      <view class="label">疲惫时如何恢复能量？</view>
+      <view class="option-grid">
+        <view 
+          wx:for="{{energyOptions}}" wx:key="id"
+          class="option-card {{energySource === item.id ? 'active' : ''}}"
+          bindtap="selectEnergy"
+          data-id="{{item.id}}"
+        >
+          {{item.label}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Step 6: 导师期望 (2题) -->
+  <view class="step-content" wx:if="{{step === 6}}">
+    <view class="question-title">导师期望</view>
+    <view class="question-desc">您希望导师是什么样的？</view>
+
+    <view class="form-group">
+      <view class="label">期望的导师风格</view>
+      <view class="mentor-style-cards">
+        <view 
+          wx:for="{{styleOptions}}" wx:key="id"
+          class="style-card {{mentorStyle === item.id ? 'active' : ''}}"
+          bindtap="selectMentorStyle"
+          data-id="{{item.id}}"
+        >
+          <view class="style-label">{{item.label}}</view>
+          <view class="style-desc">{{item.desc}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-group">
+      <view class="label">导师的专业背景期望（选填）</view>
+      <input class="input" placeholder="例如：有过餐饮创业经验、熟悉AI技术" model:value="{{mentorBackground}}" />
+    </view>
+  </view>
+
+  <!-- Step 7: 过往经验 (1题) -->
+  <view class="step-content" wx:if="{{step === 7}}">
+    <view class="question-title">介绍一下自己</view>
+    <view class="question-desc">用一段话让导师更了解您</view>
+
+    <view class="form-group">
+      <view class="label">自我介绍</view>
+      <textarea 
+        class="textarea" 
+        placeholder="介绍您的背景、经历、特长、兴趣爱好，以及您最自豪的成就...&#10;&#10;这能帮助AI更好地为您匹配导师！" 
+        model:value="{{selfIntroduction}}"
+        maxlength="500"
+        show-confirm-bar="{{false}}"
+      ></textarea>
+      <view class="char-count">{{selfIntroduction.length}}/500</view>
+    </view>
+  </view>
+
+  <!-- 底部导航 -->
+  <view class="footer">
+    <view class="btn-prev" bindtap="prevStep" wx:if="{{step > 1}}">
+      <text class="arrow">←</text>
+    </view>
+    <view class="btn-next" bindtap="nextStep">
+      {{step === 7 ? '完成并保存' : '下一步'}}
+    </view>
+  </view>
+</view>

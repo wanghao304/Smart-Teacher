@@ -1,0 +1,173 @@
+/* pages/login/login.wxss */
+.container {
+  min-height: 100vh;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 60rpx;
+}
+
+.header {
+  margin-top: 80rpx;
+  margin-bottom: 100rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-box {
+  width: 160rpx;
+  height: 160rpx;
+  background: #f5f7fa;
+  border-radius: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.05);
+}
+
+.logo-icon {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.app-name {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 12rpx;
+}
+
+.slogan {
+  font-size: 28rpx;
+  color: #9ca3af;
+  letter-spacing: 2rpx;
+}
+
+/* 表单区域 */
+.login-form {
+  width: 100%;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.btn-wechat {
+  background: #07c160;
+  color: white;
+  border-radius: 48rpx;
+  height: 96rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: 600;
+  margin-bottom: 30rpx;
+  width: 100%;
+}
+
+.other-login {
+  text-align: center;
+  font-size: 28rpx;
+  color: #6b7280;
+  padding: 20rpx;
+}
+
+/* 输入框样式 */
+.input-group {
+  background: #f9fafb;
+  border-radius: 24rpx;
+  height: 96rpx;
+  display: flex;
+  align-items: center;
+  padding: 0 30rpx;
+  margin-bottom: 24rpx;
+  border: 2rpx solid transparent;
+  transition: all 0.2s;
+}
+
+.input-group:focus-within {
+  background: white;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 4rpx rgba(99, 102, 241, 0.1);
+}
+
+.input {
+  flex: 1;
+  height: 100%;
+  font-size: 30rpx;
+  color: #1f2937;
+}
+
+.code-group {
+  padding-right: 10rpx;
+}
+
+.btn-code {
+  font-size: 28rpx;
+  color: #6366f1;
+  padding: 16rpx 24rpx;
+  font-weight: 600;
+}
+
+.btn-code.disabled {
+  color: #9ca3af;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  color: white;
+  border-radius: 48rpx;
+  height: 96rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: 600;
+  margin-top: 40rpx;
+  margin-bottom: 30rpx;
+  width: 100%;
+  box-shadow: 0 8rpx 20rpx rgba(99, 102, 241, 0.3);
+}
+
+.admin-btn {
+  background: #1f2937;
+  box-shadow: 0 8rpx 20rpx rgba(31, 41, 55, 0.3);
+}
+
+.form-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 40rpx;
+  text-align: center;
+}
+
+/* 底部 */
+.footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20rpx;
+  padding-bottom: calc(40rpx + env(safe-area-inset-bottom));
+}
+
+.agreement {
+  font-size: 24rpx;
+  color: #9ca3af;
+}
+
+.link {
+  color: #6366f1;
+}
+
+.admin-link {
+  font-size: 24rpx;
+  color: #d1d5db;
+  padding: 10rpx;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}

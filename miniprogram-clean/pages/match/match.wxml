@@ -1,0 +1,45 @@
+<!-- pages/match/match.wxml - 导师匹配列表 -->
+<view class="container">
+  <!-- 匹配进度动画 -->
+  <view wx:if="{{loading}}" class="loading-section">
+    <view class="loading-text">正在为您匹配导师...</view>
+    <view class="progress-bar-bg">
+      <view class="progress-bar-fill" style="width: {{matchProgress}}%"></view>
+    </view>
+  </view>
+
+  <!-- 匹配结果 -->
+  <view wx:if="{{!loading}}" class="result-section">
+    <view class="summary-card">
+      <view class="summary-title">匹配成功 🎉</view>
+      <view class="summary-content">
+        <view>目标: {{goalSummary.goal}}</view>
+        <view>行业: {{goalSummary.industry}}</view>
+        <view>当前水平: {{goalSummary.skillLevel}}</view>
+      </view>
+    </view>
+
+    <view class="mentor-list">
+      <view wx:for="{{matchedMentors}}" wx:key="id" class="mentor-card" data-id="{{item.id}}" bindtap="viewMentorDetail">
+        <view class="mentor-header">
+          <view class="avatar">{{item.avatar}}</view>
+          <view class="info">
+            <view class="name">{{item.name}}</view>
+            <view class="title">{{item.title}}</view>
+          </view>
+          <view class="score">{{item.matchScore}}分</view>
+        </view>
+        <view class="mentor-body">
+          <view class="tags">
+            <view wx:for="{{item.specialties}}" wx:key="index" class="tag">{{item}}</view>
+          </view>
+          <view class="rating">⭐ {{item.rating}} ({{item.reviewCount}} 条评价)</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="actions">
+      <button class="btn-primary" bindtap="rematch">重新匹配</button>
+    </view>
+  </view>
+</view>

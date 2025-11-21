@@ -1,0 +1,52 @@
+{
+    "pages": [
+        "pages/index/index",
+        "pages/profile/profile",
+        "pages/mentor/mentor",
+        "pages/project/project",
+        "pages/calendar/calendar",
+        "pages/share/share",
+        "pages/chat/chat",
+        "pages/membership/membership"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#6366f1",
+        "navigationBarTitleText": "智导 Smart Teacher",
+        "navigationBarTextStyle": "white",
+        "backgroundColor": "#f5f5f5"
+    },
+    "tabBar": {
+        "color": "#999999",
+        "selectedColor": "#6366f1",
+        "backgroundColor": "#ffffff",
+        "borderStyle": "black",
+        "list": [
+            {
+                "pagePath": "pages/index/index",
+                "text": "🏠 首页"
+            },
+            {
+                "pagePath": "pages/project/project",
+                "text": "📊 项目"
+            },
+            {
+                "pagePath": "pages/mentor/mentor",
+                "text": "👨‍🏫 导师"
+            },
+            {
+                "pagePath": "pages/profile/profile",
+                "text": "👤 我的"
+            }
+        ]
+    },
+    "permission": {
+        "scope.userLocation": {
+            "desc": "用于获取您的城市信息，提供本地化导师推荐"
+        }
+    },
+    "requiredPrivateInfos": [
+        "chooseLocation"
+    ],
+    "lazyCodeLoading": "requiredComponents"
+}

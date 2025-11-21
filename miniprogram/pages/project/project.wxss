@@ -1,0 +1,68 @@
+/* project.wxss */
+.project-page {
+  padding-top: var(--spacing-lg);
+  min-height: 100vh;
+}
+
+.project-list {
+  margin-top: var(--spacing-md);
+}
+
+.project-card {
+  margin-bottom: var(--spacing-md);
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.project-name {
+  font-size: var(--font-lg);
+  font-weight: 600;
+  flex: 1;
+}
+
+.project-progress {
+  margin-bottom: var(--spacing-sm);
+}
+
+.progress-label {
+  font-size: var(--font-xs);
+  color: var(--text-secondary);
+  margin-bottom: 8rpx;
+}
+
+.progress-bar {
+  height: 12rpx;
+  background-color: var(--bg-tertiary);
+  border-radius: 6rpx;
+  overflow: hidden;
+  margin-bottom: 8rpx;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-light) 100%);
+  transition: width 0.3s ease;
+}
+
+.progress-value {
+  text-align: right;
+  font-size: var(--font-xs);
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.project-score {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+}
+
+.score-value {
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: var(--font-md);
+}

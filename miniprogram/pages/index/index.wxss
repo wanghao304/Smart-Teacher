@@ -1,0 +1,27 @@
+/* 首页 - 极简样式 */
+.container {
+  padding: 50rpx;
+  text-align: center;
+}
+
+.title {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #6366f1;
+  margin-bottom: 20rpx;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 80rpx;
+}
+
+.button {
+  background: linear-gradient(135deg, #6366f1 0%, #764ba2 100%);
+  color: white;
+  padding: 30rpx;
+  margin: 20rpx 0;
+  border-radius: 16rpx;
+  font-size: 32rpx;
+}

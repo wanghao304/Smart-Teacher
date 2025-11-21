@@ -1,0 +1,55 @@
+/* share.wxss */
+.share-page {
+  min-height: 100vh;
+  padding-top: var(--spacing-xl);
+}
+
+.share-banner {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.share-icon {
+  width: 200rpx;
+  height: 200rpx;
+  margin-bottom: var(--spacing-md);
+}
+
+.share-title {
+  display: block;
+  font-size: var(--font-xl);
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+}
+
+.share-desc {
+  display: block;
+  font-size: var(--font-md);
+  color: var(--text-secondary);
+}
+
+.project-details {
+  margin-top: var(--spacing-lg);
+}
+
+.detail-item {
+  display: flex;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid var(--border-color);
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  width: 160rpx;
+}
+
+.detail-value {
+  flex: 1;
+  font-size: var(--font-sm);
+  color: var(--text-primary);
+}

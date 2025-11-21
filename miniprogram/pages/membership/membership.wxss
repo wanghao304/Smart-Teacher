@@ -1,0 +1,140 @@
+/* membership.wxss */
+.membership-page {
+  min-height: 100vh;
+  background-color: var(--bg-secondary);
+}
+
+.member-card {
+  margin: var(--spacing-lg);
+  padding: 40rpx;
+  border-radius: var(--radius-xl);
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+.member-card.free {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.member-card.pro {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32rpx;
+}
+
+.member-level {
+  font-size: 48rpx;
+  font-weight: 700;
+}
+
+.member-icon {
+  font-size: 64rpx;
+}
+
+.usage-info {
+  margin-bottom: 24rpx;
+}
+
+.usage-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.usage-label {
+  font-size: 28rpx;
+  opacity: 0.9;
+}
+
+.usage-value {
+  font-size: 32rpx;
+  font-weight: 600;
+}
+
+.expiry-info {
+  font-size: 24rpx;
+  opacity: 0.8;
+}
+
+.comparison-table {
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-top: var(--spacing-md);
+}
+
+.table-header,
+.table-row {
+  display: flex;
+  border-bottom: 1rpx solid var(--border-color);
+}
+
+.table-header {
+  background-color: var(--bg-tertiary);
+  font-weight: 600;
+}
+
+.table-header .col {
+  padding: 20rpx;
+  font-size: var(--font-sm);
+}
+
+.table-row .col {
+  padding: 24rpx 20rpx;
+  font-size: var(--font-sm);
+}
+
+.col {
+  flex: 1;
+  text-align: center;
+}
+
+.col.feature {
+  text-align: left;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.col.highlight {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.invite-section {
+  margin-bottom: 40rpx;
+}
+
+.invite-card {
+  padding: 32rpx;
+}
+
+.invite-desc {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  margin-bottom: 16rpx;
+}
+
+.reward-list {
+  background-color: var(--bg-secondary);
+  padding: 24rpx;
+  border-radius: var(--radius-md);
+  margin-bottom: 16rpx;
+}
+
+.reward-item {
+  font-size: var(--font-sm);
+  color: var(--text-primary);
+  margin-bottom: 12rpx;
+  line-height: 40rpx;
+}
+
+.reward-item:last-child {
+  margin-bottom: 0;
+}

@@ -1,0 +1,53 @@
+<!-- pages/mentors/index.wxml -->
+<view class="container">
+  <!-- A区: 数据可视化 -->
+  <view class="stats-card">
+    <view class="card-header">
+      <view class="stat-title">导师团队概览</view>
+      <view class="add-btn" bindtap="addMentor">
+        <text class="plus-icon">+</text> 添加导师
+      </view>
+    </view>
+    
+    <view class="stat-grid">
+      <view class="stat-item">
+        <view class="num">{{stats.activeMentors}}</view>
+        <view class="label">活跃导师</view>
+      </view>
+      <view class="stat-item">
+        <view class="num">{{stats.avgRating}}</view>
+        <view class="label">平均评分</view>
+      </view>
+      <view class="stat-item">
+        <view class="num">{{stats.totalCalls}}</view>
+        <view class="label">累计调用</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- B区: 导师列表 -->
+  <view class="mentor-list">
+    <view class="list-header">
+      <view class="list-title">我的导师</view>
+    </view>
+    
+    <view wx:for="{{mentors}}" wx:key="id" class="mentor-card" data-id="{{item.id}}" bindtap="chatWithMentor">
+      <view class="avatar">{{item.avatar}}</view>
+      <view class="info">
+        <view class="name-row">
+          <view class="name">{{item.name}}</view>
+          <view class="tag">{{item.role}}</view>
+        </view>
+        <view class="desc">点击发起对话</view>
+      </view>
+      <view class="action">
+        <view class="chat-icon">💬</view>
+      </view>
+    </view>
+    
+    <view wx:if="{{mentors.length === 0}}" class="empty-state">
+      <view class="empty-text">暂无导师</view>
+      <button class="btn-add-big" bindtap="addMentor">去添加导师</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,25 @@
+<!-- share.wxml -->
+<view class="share-page">
+  <view class="container">
+    <view class="share-banner">
+      <image src="/images/share-icon.png" class="share-icon" mode="aspectFit"></image>
+      <text class="share-title">加入项目协作</text>
+      <text class="share-desc">{{projectInfo.name}}</text>
+    </view>
+
+    <view class="project-details card">
+      <view class="detail-item">
+        <text class="detail-label">项目名称：</text>
+        <text class="detail-value">{{projectInfo.name}}</text>
+      </view>
+      <view class="detail-item">
+        <text class="detail-label">发起人：</text>
+        <text class="detail-value">{{projectInfo.owner}}</text>
+      </view>
+    </view>
+
+    <button class="btn btn-primary mt-lg" bindtap="joinProject">
+      <text>加入项目</text>
+    </button>
+  </view>
+</view>

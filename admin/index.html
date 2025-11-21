@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Teacher 管理后台</title>
+  <style>
+    :root {
+      --primary-color: #6366f1;
+      --primary-light: #818cf8;
+      --success-color: #10b981;
+      --warning-color: #f59e0b;
+      --danger-color: #ef4444;
+      --text-primary: #1f2937;
+      --text-secondary: #6b7280;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f9fafb;
+      --border-color: #e5e7eb;
+      --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    /* 登录页面 */
+    .login-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .login-box {
+      background-color: white;
+      padding: 48px;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .login-title {
+      font-size: 32px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .login-subtitle {
+      font-size: 14px;
+      text-align: center;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 14px;
+      transition: all 0.3s;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .error-message {
+      color: var(--danger-color);
+      font-size: 14px;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    /* 主界面布局 */
+    .admin-container {
+      display: none;
+    }
+
+    .admin-container.show {
+      display: flex;
+    }
+
+    .sidebar {
+      width: 260px;
+      background-color: var(--bg-primary);
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .sidebar-logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .sidebar-menu {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 0;
+    }
+
+    .menu-item {
+      padding: 12px 24px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-secondary);
+    }
+
+    .menu-item:hover {
+      background-color: var(--bg-secondary);
+      color: var(--primary-color);
+    }
+
+    .menu-item.active {
+      background-color: rgba(99, 102, 241, 0.1);
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    .menu-icon {
+      font-size: 20px;
+    }
+
+    .main-content {
+      margin-left: 260px;
+      padding: 32px;
+      min-height: 100vh;
+    }
+
+    .page-header {
+      margin-bottom: 32px;
+    }
+
+    .page-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .page-subtitle {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    /* 卡片 */
+    .card {
+      background-color: var(--bg-primary);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    /* 统计卡片 */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat-label {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .stat-change {
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+    /* 表格 */
+    .table-container {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background-color: var(--bg-secondary);
+    }
+
+    th {
+      padding: 12px;
+      text-align: left;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 14px;
+    }
+
+    tr:hover {
+      background-color: var(--bg-secondary);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .badge-success {
+      background-color: rgba(16, 185, 129, 0.1);
+      color: var(--success-color);
+    }
+
+    .badge-warning {
+      background-color: rgba(245, 158, 11, 0.1);
+      color: var(--warning-color);
+    }
+
+    .badge-danger {
+      background-color: rgba(239, 68, 68, 0.1);
+      color: var(--danger-color);
+    }
+
+    .action-btns {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 12px;
+      border-radius: 6px;
+    }
+
+    .btn-warning {
+      background-color: var(--warning-color);
+      color: white;
+    }
+
+    .btn-danger {
+      background-color: var(--danger-color);
+      color: white;
+    }
+
+    .charts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 24px;
+    }
+
+    #userChart,
+    #revenueChart,
+    #tokenChart {
+      height: 300px;
+    }
+
+    .logout-btn {
+      padding: 12px 24px;
+      border-top: 1px solid var(--border-color);
+      color: var(--danger-color);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .logout-btn:hover {
+      background-color: rgba(239, 68, 68, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <!-- 登录页面 -->
+  <div class="login-container" id="loginPage">
+    <div class="login-box">
+      <h1 class="login-title">Smart Teacher</h1>
+      <p class="login-subtitle">管理员登录</p>
+      <form id="loginForm">
+        <div class="form-group">
+          <label class="form-label">账号</label>
+          <input 
+            type="text" 
+            class="form-input" 
+            id="username" 
+            placeholder="请输入管理员账号"
+            autocomplete="username"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">密码</label>
+          <input 
+            type="password" 
+            class="form-input" 
+            id="password" 
+            placeholder="请输入密码"
+            autocomplete="current-password"
+          />
+        </div>
+        <p class="error-message" id="errorMessage">账号或密码错误</p>
+        <button type="submit" class="btn btn-primary">登录</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 主管理界面 -->
+  <div class="admin-container" id="adminPanel">
+    <!-- 侧边栏 -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">📚 Smart Teacher</div>
+      </div>
+      <nav class="sidebar-menu">
+        <div class="menu-item active" data-page="dashboard">
+          <span class="menu-icon">📊</span>
+          <span>数据总览</span>
+        </div>
+        <div class="menu-item" data-page="users">
+          <span class="menu-icon">👥</span>
+          <span>用户管理</span>
+        </div>
+        <div class="menu-item" data-page="content">
+          <span class="menu-icon">📝</span>
+          <span>内容审核</span>
+        </div>
+        <div class="menu-item" data-page="finance">
+          <span class="menu-icon">💰</span>
+          <span>财务管理</span>
+        </div>
+        <div class="menu-item" data-page="settings">
+          <span class="menu-icon">⚙️</span>
+          <span>系统配置</span>
+        </div>
+      </nav>
+      <div class="logout-btn" id="logoutBtn">
+        <span>🚪 退出登录</span>
+      </div>
+    </div>
+
+    <!-- 主内容区 -->
+    <div class="main-content">
+      <!-- 数据总览页 -->
+      <div class="content-page" id="dashboardPage">
+        <div class="page-header">
+          <h1 class="page-title">数据总览</h1>
+          <p class="page-subtitle">实时查看平台运营数据</p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <div class="stat-label">总用户数</div>
+            <div class="stat-value">1,234</div>
+            <div class="stat-change">↑ 12% 本周</div>
+          </div>
+          <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+            <div class="stat-label">付费会员</div>
+            <div class="stat-value">89</div>
+            <div class="stat-change">↑ 23% 本周</div>
+          </div>
+          <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+            <div class="stat-label">今日活跃</div>
+            <div class="stat-value">567</div>
+            <div class="stat-change">↓ 5% 昨日</div>
+          </div>
+          <div class="stat-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+            <div class="stat-label">本月收入</div>
+            <div class="stat-value">¥8,810</div>
+            <div class="stat-change">↑ 18% 上月</div>
+          </div>
+        </div>
+
+        <div class="charts">
+          <div class="card">
+            <div class="card-title">用户增长趋势</div>
+            <canvas id="userChart"></canvas>
+          </div>
+          <div class="card">
+            <div class="card-title">收入统计</div>
+            <canvas id="revenueChart"></canvas>
+          </div>
+          <div class="card">
+            <div class="card-title">Token消耗</div>
+            <canvas id="tokenChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- 用户管理页 -->
+      <div class="content-page" id="usersPage" style="display: none;">
+        <div class="page-header">
+          <h1 class="page-title">用户管理</h1>
+          <p class="page-subtitle">管理所有用户账号和权益</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">用户列表</div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>用户ID</th>
+                  <th>昵称</th>
+                  <th>注册时间</th>
+                  <th>会员状态</th>
+                  <th>今日使用</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="usersTableBody">
+                <tr>
+                  <td>U001</td>
+                  <td>张三</td>
+                  <td>2025-11-15</td>
+                  <td><span class="badge badge-success">Pro会员</span></td>
+                  <td>5次</td>
+                  <td>
+                    <div class="action-btns">
+                      <button class="btn btn-sm btn-primary">查看</button>
+                      <button class="btn btn-sm btn-warning">编辑</button>
+                      <button class="btn btn-sm btn-danger">封禁</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>U002</td>
+                  <td>李四</td>
+                  <td>2025-11-18</td>
+                  <td><span class="badge badge-warning">免费版</span></td>
+                  <td>2次</td>
+                  <td>
+                    <div class="action-btns">
+                      <button class="btn btn-sm btn-primary">查看</button>
+                      <button class="btn btn-sm btn-warning">编辑</button>
+                      <button class="btn btn-sm btn-danger">封禁</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 内容审核页、财务管理页、系统配置页类似结构，此处省略 -->
+    </div>
+  </div>
+
+  <!-- Chart.js for 数据可视化 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <script>
+    // 管理员认证信息
+    const ADMIN_USERNAME = 'wanghao304';
+    const ADMIN_PASSWORD = 'lm888456';
+
+    // DOM元素
+    const loginPage = document.getElementById('loginPage');
+    const adminPanel = document.getElementById('adminPanel');
+    const loginForm = document.getElementById('loginForm');
+    const errorMessage = document.getElementById('errorMessage');
+    const menuItems = document.querySelectorAll('.menu-item');
+    const contentPages = document.querySelectorAll('.content-page');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    // 登录处理
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+        // 登录成功
+        sessionStorage.setItem('adminLoggedIn', 'true');
+        loginPage.style.display = 'none';
+        adminPanel.classList.add('show');
+        initCharts();
+      } else {
+        // 登录失败
+        errorMessage.classList.add('show');
+        setTimeout(() => {
+          errorMessage.classList.remove('show');
+        }, 3000);
+      }
+    });
+
+    // 退出登录
+    logoutBtn.addEventListener('click', () => {
+      sessionStorage.removeItem('adminLoggedIn');
+      adminPanel.classList.remove('show');
+      loginPage.style.display = 'flex';
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+    });
+
+    // 页面切换
+    menuItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const pageName = item.getAttribute('data-page');
+        
+        // 更新菜单状态
+        menuItems.forEach(mi => mi.classList.remove('active'));
+        item.classList.add('active');
+        
+        // 切换页面
+        contentPages.forEach(page => {
+          page.style.display = page.id === `${pageName}Page` ? 'block' : 'none';
+        });
+      });
+    });
+
+    // 检查登录状态
+    if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+      loginPage.style.display = 'none';
+      adminPanel.classList.add('show');
+      initCharts();
+    }
+
+    // 初始化图表
+    function initCharts() {
+      // 用户增长趋势图
+      const userCtx = document.getElementById('userChart').getContext('2d');
+      new Chart(userCtx, {
+        type: 'line',
+        data: {
+          labels: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+          datasets: [{
+            label: '新增用户',
+            data: [12, 19, 15, 25, 22, 30, 28],
+            borderColor: '#6366f1',
+            backgroundColor: 'rgba(99, 102, 241, 0.1)',
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            }
+          }
+        }
+      });
+
+      // 收入统计
+      const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+      new Chart(revenueCtx, {
+        type: 'bar',
+        data: {
+          labels: ['1周', '2周', '3周', '4周'],
+          datasets: [{
+            label: '收入（元）',
+            data: [1200, 1800, 2100, 2500],
+            backgroundColor: '#10b981'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            }
+          }
+        }
+      });
+
+      // Token消耗
+      const tokenCtx = document.getElementById('tokenChart').getContext('2d');
+      new Chart(tokenCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['免费用户', '付费用户', '系统测试'],
+          datasets: [{
+            data: [45, 35, 20],
+            backgroundColor: ['#6366f1', '#10b981', '#f59e0b']
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      });
+    }
+  </script>
+</body>
+</html>

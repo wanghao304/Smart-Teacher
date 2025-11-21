@@ -1,0 +1,73 @@
+/* pages/projects/index.wxss */
+.container {
+  min-height: 100vh;
+  background: #f5f7fa;
+  padding: 30rpx;
+}
+
+.header {
+  margin-bottom: 30rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+.project-card {
+  background: white;
+  border-radius: 24rpx;
+  padding: 30rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+.status {
+  font-size: 24rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 12rpx;
+  background: #e0e7ff;
+  color: #6366f1;
+}
+
+.date {
+  font-size: 24rpx;
+  color: #9ca3af;
+}
+
+.desc {
+  font-size: 28rpx;
+  color: #374151;
+  line-height: 1.5;
+  margin-bottom: 24rpx;
+}
+
+.progress-bar {
+  height: 8rpx;
+  background: #f3f4f6;
+  border-radius: 4rpx;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: #6366f1;
+}
+
+.empty-state {
+  text-align: center;
+  margin-top: 100rpx;
+  color: #9ca3af;
+}
+
+.icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}

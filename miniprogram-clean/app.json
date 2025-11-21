@@ -1,0 +1,52 @@
+{
+    "pages": [
+        "pages/login/login",
+        "pages/intro/intro",
+        "pages/profile/profile",
+        "pages/profile-view/profile-view",
+        "pages/mentor-create/mentor-create",
+        "pages/project-create/project-create",
+        "pages/index/index",
+        "pages/mentors/index",
+        "pages/projects/index",
+        "pages/me/me",
+        "pages/mine/index",
+        "pages/chat/chat",
+        "pages/match/match",
+        "pages/mentor-detail/mentor-detail",
+        "pages/project/project"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#6366f1",
+        "navigationBarTitleText": "智导",
+        "navigationBarTextStyle": "white",
+        "backgroundColor": "#f5f5f5"
+    },
+    "tabBar": {
+        "color": "#999999",
+        "selectedColor": "#6366f1",
+        "backgroundColor": "#ffffff",
+        "borderStyle": "black",
+        "list": [
+            {
+                "pagePath": "pages/index/index",
+                "text": "首页"
+            },
+            {
+                "pagePath": "pages/mentors/index",
+                "text": "导师"
+            },
+            {
+                "pagePath": "pages/projects/index",
+                "text": "项目"
+            },
+            {
+                "pagePath": "pages/me/me",
+                "text": "我的"
+            }
+        ]
+    },
+    "style": "v2",
+    "sitemapLocation": "sitemap.json"
+}

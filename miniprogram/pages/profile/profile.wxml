@@ -1,0 +1,37 @@
+<!--profile.wxml-->
+<view class="profile-container">
+  <!-- 进度条 -->
+  <view class="progress-bar">
+    <view class="progress-item" wx:for="{{totalSteps}}" wx:key="*this" class="{{step >= item + 1 ? 'active' : ''}}"></view>
+  </view>
+
+  <view class="step-title">步骤 {{step}}/{{totalSteps}}</view>
+
+  <!-- 步骤1：心理与人格 -->
+  <view wx:if="{{step === 1}}" class="step-content fade-in">
+    <view class="section-title">了解你的心理与人格</view>
+    <view class="section-desc">帮助我们更好地为你推荐导师</view>
+    
+    <!-- 测试题目 -->
+    <view class="question-list">
+      <view class="question-item">
+        <text class="question-text">1. 你更偏向于：</text>
+        <radio-group>
+          <label><radio value="introvert"/>内向，喜欢独处</label>
+          <label><radio value="extrovert"/>外向，享受社交</label>
+        </radio-group>
+      </view>
+      <!-- 更多题目... -->
+    </view>
+  </view>
+
+  <!-- 步骤2-5类似结构 -->
+
+  <!-- 底部按钮 -->
+  <view class="button-group">
+    <button wx:if="{{step > 1}}" class="btn btn-secondary" bindtap="prevStep">上一步</button>
+    <button class="btn btn-primary" bindtap="nextStep">
+      {{step < totalSteps ? '下一步' : '完成'}}
+    </button>
+  </view>
+</view>

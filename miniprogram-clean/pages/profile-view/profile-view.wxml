@@ -1,0 +1,203 @@
+<!-- pages/profile-view/profile-view.wxml -->
+<view class="container">
+  <!-- 顶部标题 -->
+  <view class="header">
+    <view class="title">我的资料</view>
+    <view class="subtitle">点击任意项目可编辑</view>
+  </view>
+
+  <!-- 空状态提示 -->
+  <view class="empty-state" wx:if="{{!profile || !profile.currentIndustry}}">
+    <view class="empty-icon">📋</view>
+    <view class="empty-title">暂无档案</view>
+    <view class="empty-desc">请先完善个人档案</view>
+    <button class="btn-goto-profile" bindtap="reCollect">去填写档案</button>
+  </view>
+
+  <!-- 资料卡片区域 -->
+  <scroll-view class="content" scroll-y wx:else>
+    
+    <!-- 第1维度：身份锚点 -->
+    <view class="section">
+      <view class="section-title">身份锚点</view>
+      
+      <view class="field-item" bindtap="startEdit" data-field="currentIndustry">
+        <view class="field-label">当前行业</view>
+        <view class="field-value">{{profile.currentIndustry || '未填写'}}</view>
+        <view class="field-arrow">›</view>
+      </view>
+
+      <view class="field-item" bindtap="startEdit" data-field="currentRole">
+        <view class="field-label">当前职位</view>
+        <view class="field-value">{{profile.currentRole || '未填写'}}</view>
+        <view class="field-arrow">›</view>
+      </view>
+
+      <view class="field-item">
+        <view class="field-label">从业年资</view>
+        <view class="field-value">{{profile.yearsExp}}年</view>
+      </view>
+    </view>
+
+    <!-- 第2维度：学习目标 -->
+    <view class="section">
+      <view class="section-title">学习目标</view>
+      
+      <view class="field-item">
+        <view class="field-label">学习类型</view>
+        <view class="field-value">{{profile.learningType === 'cross_field' ? '跨界学习' : '本职突破'}}</view>
+      </view>
+
+      <view class="field-item" bindtap="startEdit" data-field="targetField" wx:if="{{profile.learningType === 'cross_field'}}">
+        <view class="field-label">目标领域</view>
+        <view class="field-value">{{profile.targetField || '未填写'}}</view>
+        <view class="field-arrow">›</view>
+      </view>
+
+      <view class="field-item" bindtap="startEdit" data-field="targetProject" wx:if="{{profile.learningType === 'cross_field'}}">
+        <view class="field-label">目标项目</view>
+        <view class="field-value">{{profile.targetProject || '未填写'}}</view>
+        <view class="field-arrow">›</view>
+      </view>
+
+      <view class="field-item" bindtap="startEdit" data-field="currentChallenge" wx:if="{{profile.learningType === 'core_improve'}}">
+        <view class="field-label">当前困扰</view>
+        <view class="field-value text-multi">{{profile.currentChallenge || '未填写'}}</view>
+        <view class="field-arrow">›</view>
+      </view>
+
+      <view class="field-item">
+        <view class="field-label">期望时间</view>
+        <view class="field-value">{{profile.targetTimeline}}个月</view>
+      </view>
+    </view>
+
+    <!-- 第3维度：能力盘点 -->
+    <view class="section">
+      <view class="section-title">能力盘点</view>
+      
+      <view class="field-item" bindtap="startEdit" data-field="techSkills">
+        <view class="field-label">技术能力</view>
+        <view class="field-value tags">
+          <view class="tag" wx:for="{{profile.techSkills}}" wx:key="*this">{{item}}</view>
+        </view>
+        <view class="field-arrow">›</view>
+      </view>
+
+      <view class="field-item" bindtap="startEdit" data-field="softSkills">
+        <view class="field-label">软技能</view>
+        <view class="field-value tags">
+          <view class="tag" wx:for="{{profile.softSkills}}" wx:key="*this">{{item}}</view>
+        </view>
+        <view class="field-arrow">›</view>
+      </view>
+
+      <view class="field-item" bindtap="startEdit" data-field="strengthArea">
+        <view class="field-label">擅长领域</view>
+        <view class="field-value">{{profile.strengthArea || '未填写'}}</view>
+        <view class="field-arrow">›</view>
+      </view>
+
+      <view class="field-item" bindtap="startEdit" data-field="weakArea">
+        <view class="field-label">薄弱环节</view>
+        <view class="field-value">{{profile.weakArea || '未填写'}}</view>
+        <view class="field-arrow">›</view>
+      </view>
+    </view>
+
+    <!-- 第4维度：学习特质 -->
+    <view class="section">
+      <view class="section-title">学习特质</view>
+      
+      <view class="field-item">
+        <view class="field-label">学习速度</view>
+        <view class="field-value">{{profile.learningSpeed}}/10</view>
+      </view>
+
+      <view class="field-item">
+        <view class="field-label">理解方式</view>
+        <view class="field-value">{{comprehensionMap[profile.comprehensionStyle] || '未选择'}}</view>
+      </view>
+
+      <view class="field-item">
+        <view class="field-label">学习方式</view>
+        <view class="field-value">{{methodMap[profile.preferredMethod] || '未选择'}}</view>
+      </view>
+    </view>
+
+    <!-- 第5维度：性格底色 -->
+    <view class="section">
+      <view class="section-title">性格底色</view>
+      
+      <view class="field-item">
+        <view class="field-label">沟通风格</view>
+        <view class="field-value">{{commMap[profile.communicationStyle] || '未选择'}}</view>
+      </view>
+
+      <view class="field-item">
+        <view class="field-label">抗压能力</view>
+        <view class="field-value">{{profile.stressResistance}}/10</view>
+      </view>
+
+      <view class="field-item">
+        <view class="field-label">能量来源</view>
+        <view class="field-value">{{energyMap[profile.energySource] || '未选择'}}</view>
+      </view>
+    </view>
+
+    <!-- 第6维度：导师期望 -->
+    <view class="section">
+      <view class="section-title">导师期望</view>
+      
+      <view class="field-item">
+        <view class="field-label">导师风格</view>
+        <view class="field-value">{{styleMap[profile.mentorStyle] || '未选择'}}</view>
+      </view>
+
+      <view class="field-item" bindtap="startEdit" data-field="mentorBackground">
+        <view class="field-label">专业背景</view>
+        <view class="field-value">{{profile.mentorBackground || '无要求'}}</view>
+        <view class="field-arrow">›</view>
+      </view>
+    </view>
+
+    <!-- 第7维度：自我介绍 -->
+    <view class="section">
+      <view class="section-title">自我介绍</view>
+      
+      <view class="field-item" bindtap="startEdit" data-field="selfIntroduction">
+        <view class="field-label">个人介绍</view>
+        <view class="field-value text-multi">{{profile.selfIntroduction || '未填写'}}</view>
+        <view class="field-arrow">›</view>
+      </view>
+    </view>
+
+    <view class="bottom-spacer"></view>
+  </scroll-view>
+
+  <!-- 底部按钮 -->
+  <view class="footer">
+    <button class="btn-secondary" bindtap="reCollect">重新完整采集</button>
+  </view>
+
+  <!-- 编辑弹窗 -->
+  <view class="edit-modal" wx:if="{{editingField}}">
+    <view class="modal-mask" bindtap="cancelEdit"></view>
+    <view class="modal-content">
+      <view class="modal-title">编辑 {{editingField}}</view>
+      <textarea 
+        class="modal-input" 
+        value="{{editingValue}}"
+        bindinput="onInputChange"
+        placeholder="请输入内容"
+        maxlength="300"
+        auto-focus
+      ></textarea>
+      <view class="modal-tip">多个值请用逗号分隔</view>
+      <view class="modal-actions">
+        <button class="modal-btn cancel" bindtap="cancelEdit">取消</button>
+        <button class="modal-btn confirm" bindtap="saveEdit">保存</button>
+      </view>
+    </view>
+  </view>
+</view>

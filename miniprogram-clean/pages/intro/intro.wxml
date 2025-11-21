@@ -1,0 +1,68 @@
+<!-- pages/intro/intro.wxml -->
+<view class="container">
+  <swiper class="intro-swiper" current="{{current}}" indicator-dots="{{true}}" indicator-color="rgba(255, 255, 255, 0.4)" indicator-active-color="#ffffff" bindchange="onSlideChange">
+    
+    <!-- Slide 1: 跨界成长 -->
+    <swiper-item>
+      <view class="slide-content slide-1">
+        <view class="illustration-area">
+          <view class="gradient-circle circle-1">
+            <view class="inner-circle"></view>
+          </view>
+        </view>
+        <view class="text-area">
+          <view class="main-title">医生想开餐馆？</view>
+          <view class="main-title">销售想学编程？</view>
+          <view class="sub-text">跨界不是梦想，而是<text class="highlight">智导</text>的日常</view>
+        </view>
+        <view class="btn-area">
+          <button class="btn-next" bindtap="nextSlide">探索可能性 →</button>
+        </view>
+      </view>
+    </swiper-item>
+
+    <!-- Slide 2: AI深度理解 -->
+    <swiper-item>
+      <view class="slide-content slide-2">
+        <view class="illustration-area">
+          <view class="gradient-circle circle-2">
+            <view class="inner-circle"></view>
+          </view>
+        </view>
+        <view class="text-area">
+          <view class="main-title">不只是简历匹配</view>
+          <view class="sub-text">通过<text class="highlight">20+深度问题</text>，AI读懂你的潜能、渴望与学习方式，为你匹配真正懂你的跨领域导师</view>
+        </view>
+        <view class="btn-area">
+          <button class="btn-next" bindtap="nextSlide">了解如何匹配 →</button>
+        </view>
+      </view>
+    </swiper-item>
+
+    <!-- Slide 3: 专属导师团 -->
+    <swiper-item>
+      <view class="slide-content slide-3">
+        <view class="illustration-area">
+          <view class="gradient-circle circle-3">
+            <view class="mentor-avatars">
+              <view class="avatar">马</view>
+              <view class="avatar">稻</view>
+              <view class="avatar">乔</view>
+            </view>
+          </view>
+        </view>
+        <view class="text-area">
+          <view class="main-title">组建跨界智囊团</view>
+          <view class="sub-text">马斯克教你创新思维，稻盛和夫教你经营哲学，AI为你的每个项目量身定制导师阵容</view>
+        </view>
+        <view class="btn-area">
+          <button class="btn-start" bindtap="startProfile">开始建立我的档案</button>
+        </view>
+      </view>
+    </swiper-item>
+
+  </swiper>
+  
+  <!-- 跳过按钮 -->
+  <view class="skip-btn" bindtap="startProfile" wx:if="{{current < 2}}">跳过</view>
+</view>

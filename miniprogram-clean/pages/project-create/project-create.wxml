@@ -1,0 +1,153 @@
+<!-- pages/project-create/project-create.wxml -->
+<view class="container">
+  <!-- 顶部 -->
+  <view class="header">
+    <view class="title">创建新项目</view>
+    <view class="subtitle">用自然语言描述，AI智能解析</view>
+  </view>
+
+  <!-- 模式切换 -->
+  <view class="mode-tabs">
+    <view 
+      class="mode-tab {{mode === 'natural' ? 'active' : ''}}"
+      bindtap="toggleMode"
+      data-mode="natural"
+    >
+      🤖 AI智能解析
+    </view>
+    <view 
+      class="mode-tab {{mode === 'structured' ? 'active' : ''}}"
+      bindtap="toggleMode"
+      data-mode="structured"
+    >
+      📝 结构化填写
+    </view>
+  </view>
+
+  <!-- 自然语言模式 -->
+  <scroll-view class="content" scroll-y wx:if="{{mode === 'natural'}}">
+    <view class="natural-section">
+      <view class="section-title">描述您的项目</view>
+      <view class="section-desc">
+        用一段话说清楚：想做什么、目标是什么、需要什么技能
+      </view>
+
+      <view class="example-tips">
+        <view class="tips-title">💡 示例</view>
+        <view class="tip-item">• 用Python开发一个数据分析工具，实现自动化报表生成</view>
+        <view class="tip-item">• 学习AI绘画，3个月内掌握Midjourney和Stable Diffusion</view>
+        <view class="tip-item">• 创建个人品牌，通过写作和演讲建立行业影响力</view>
+      </view>
+
+      <textarea 
+        class="natural-input"
+        placeholder="在这里用自然语言描述您的项目..."
+        bindinput="onNaturalInput"
+        value="{{naturalInput}}"
+        maxlength="500"
+        show-confirm-bar="{{false}}"
+      ></textarea>
+      <view class="char-count">{{naturalInput.length}}/500</view>
+
+      <button 
+        class="btn-parse"
+        bindtap="parseNaturalInput"
+        disabled="{{parsing}}"
+      >
+        {{parsing ? 'AI解析中...' : '让AI帮我解析'}}
+      </button>
+    </view>
+  </scroll-view>
+
+  <!-- 结构化模式 -->
+  <scroll-view class="content" scroll-y wx:else>
+    <view class="form-section">
+      <view class="form-group">
+        <view class="label">项目名称 *</view>
+        <input 
+          class="input"
+          placeholder="例如：开发个人博客系统"
+          bindinput="onFieldInput"
+          data-field="name"
+        />
+      </view>
+
+      <view class="form-group">
+        <view class="label">项目描述 *</view>
+        <textarea 
+          class="textarea"
+          placeholder="详细描述项目的背景、目标和预期成果..."
+          bindinput="onFieldInput"
+          data-field="description"
+          maxlength="500"
+        ></textarea>
+      </view>
+
+      <view class="form-group">
+        <view class="label">难度等级</view>
+        <picker 
+          class="picker"
+          range="{{difficultyOptions}}"
+          range-key="label"
+          bindchange="onDifficultyChange"
+        >
+          <view class="picker-value">
+            {{difficultyOptions[0].label}} (默认：中等)
+          </view>
+        </picker>
+      </view>
+
+      <view class="form-group">
+        <view class="label">项目类别</view>
+        <picker 
+          class="picker"
+          range="{{categoryOptions}}"
+          bindchange="onCategoryChange"
+        >
+          <view class="picker-value">
+            {{project.category || '选择类别'}}
+          </view>
+        </picker>
+      </view>
+
+      <view class="form-group">
+        <view class="label">目标完成时间</view>
+        <picker 
+          class="picker"
+          mode="date"
+          bindchange="onDateChange"
+        >
+          <view class="picker-value">
+            {{project.targetDate || '选择日期'}}
+          </view>
+        </picker>
+      </view>
+
+      <view class="form-group">
+        <view class="label">需要的技能（选填）</view>
+        <input 
+          class="input"
+          placeholder="用逗号分隔，例如：Python, 数据分析, 可视化"
+          bindinput="onFieldInput"
+          data-field="skills"
+        />
+      </view>
+
+      <view class="form-group">
+        <view class="label">预期产出（选填）</view>
+        <textarea 
+          class="textarea"
+          placeholder="例如：完整可运行的系统、技术文档、分析报告等..."
+          bindinput="onFieldInput"
+          data-field="expectedOutput"
+          maxlength="300"
+        ></textarea>
+      </view>
+    </view>
+
+    <view class="footer-btns">
+      <button class="btn-cancel" bindtap="cancel">取消</button>
+      <button class="btn-create" bindtap="createStructuredProject">创建项目</button>
+    </view>
+  </scroll-view>
+</view>
